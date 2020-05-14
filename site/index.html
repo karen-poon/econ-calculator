@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>ECE472 Calculator</title>
+</head>
+<body class="body">
+    <div class="banner">
+        <h1>ECE472<br>Calculator</h1>
+    </div>
+    <div class="selection" id="selection">
+        <div class="first-selection">
+            <button class="selectBtn active" id="1" title="P given F"> (P|F  i, n) </button>
+            <button class="selectBtn" id="2" title="F given P"> (F|P  i, n) </button>
+        </div>
+        <div class="second-selection">
+            <button class="selectBtn" id="3" title="P given A"> (P|A  i, n) </button>
+            <button class="selectBtn" id="4" title="A given P"> (A|P  i, n) </button>
+        </div>
+        <div class="third-selection">
+            <button class="selectBtn" id="5" title="F given A"> (F|A  i, n) </button>
+            <button class="selectBtn" id="6" title="A given F"> (A|F  i, n) </button>
+        </div>
+        <div class="fourth-selection">
+            <button class="selectBtn" id="7" title="P given G"> (P|G  i, n) </button>
+            <button class="selectBtn" id="8" title="A given G"> (A|G  i, n) </button>
+        </div>
+        <div class="fifth-selection">
+            <button class="selectBtn" id="9" title="P given A with j"> (P|A i, j, n) </button>
+            <button class="selectBtn" id="10" title="F given A with j"> (F|A i, j, n) </button>
+        </div>
+    </div>
+
+    <div class="big-container">
+        <div class="container">
+            <span>i: <input type="text" id="iText" placeholder=" e.g. 0.1"></span>
+            <div id='j'></div>
+        </div>
+        <span>n: <input type="text" id="nText" placeholder=" e.g. 5"></span>
+    </div>
+
+    <div class="submit-container">
+        <button type="button" class="submit" id="submit">Submit</button>
+    </div>
+
+    <div class="result-container">
+        <span>Result: <input type="text" id="result"></span>
+    </div>
+
+    
+    <footer class="footer">
+        <div>ECE472 Calculator -- by Karen Poon</div>
+        <div class="logos">
+            <a href="https://www.linkedin.com/in/kawingkarenpoon" class="fa fa-linkedin" target="_blank"></a>
+            <a href="https://github.com/karen-poon" class="fa fa-github" target="_blank"></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+</body>
+
+
+</html>

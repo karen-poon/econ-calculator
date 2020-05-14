@@ -1,0 +1,199 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+.banner {
+    background-image: url("../images/econ_calc_banner.svg");
+    height: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+button {
+    min-width: 100px;
+}
+
+.selection {
+    margin: 0 auto;
+    padding: 10px;
+    width: 100%;
+    background-color: rgba(70, 191, 247, 0.219);
+}
+
+.first-selection, .second-selection, .third-selection,
+.fourth-selection, .fifth-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectBtn {
+    margin: 5px;
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    border-radius: 7px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+/* Style the active class, and buttons on mouse-over */
+.active, .selectBtn:hover {
+    transition: 0.3s;
+    background-color: #666;
+    color: white;
+}
+
+.big-container {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Barlow", "Helvetica Neue", Helvetica, Arial;
+}
+
+#iText, #jText, #nText {
+    height: 25px;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid rgb(156, 164, 184);
+    filter: drop-shadow(0 2px 2px rgb(156, 164, 184));
+    border-radius: 5px;
+}
+
+.submit-container {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#submit {
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 7px;
+    margin: 0;
+    color: rgb(253, 253, 253);
+    border-radius: 5px;
+    border: none;
+    background-color:rgb(37, 114, 214);
+    box-shadow: 0 0 5px rgb(156, 164, 184);
+}
+
+.submit {
+    transition: background 0.5s;
+    background-position: center;
+}
+
+.submit:hover {
+    background-image: radial-gradient(circle, transparent 1%, rgb(66, 129, 212) 1%);
+    background-size: 15000%;
+}
+
+.submit:active {
+    transition: background 0s;
+    background-size: 100%;
+}
+
+.result-container {
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 60%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: rgb(245, 223, 223);
+    font-size: 18px;
+    font-family: "Barlow", "Helvetica Neue", Helvetica, Arial;
+}
+
+@media (max-width: 450px) {
+    .result-container {
+        width: 100%;
+    }
+}
+
+#result {
+    height: 25px;
+    width: 200px;
+    pointer-events:none;
+    border: none;
+    text-align: center;
+    color: rgb(201, 11, 11);
+    font-weight: bold;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    height: 100px;
+    line-height: 24px;
+    background-color: rgb(0, 37, 85);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+@media (max-height: 710px) {
+    footer {
+        position: static;
+    }
+}
+
+.logos {
+    margin: 5px;
+}
+
+.fa {
+    padding: 9px;
+    height: 43px;
+    width: 43px;
+    font-size: 22px !important;
+    text-align: center;
+    text-decoration: none;
+    margin: 5px 10px;
+    border-radius: 50%;
+    
+    /* background: black; */
+    border: 1px solid rgb(107, 108, 109);
+    color: white;
+}
+
+.fa-linkedin:hover {
+    border: none;
+    background: rgb(40, 103, 178);
+}
+
+.fa-github:hover {
+    border: none;
+    background: black;
+}
