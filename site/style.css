@@ -13,7 +13,7 @@ body {
 }
 
 .banner {
-    background-image: url("../images/econ_calc_banner.svg");
+    background-image: url("econ_calc_banner.svg");
     height: 100px;
     background-position: center;
     background-repeat: no-repeat;
