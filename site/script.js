@@ -1,5 +1,4 @@
-var siteName = "http://127.0.0.1:5500"
-var path = "/compute?"
+var siteName = "https://ece472-calculator.netlify.app/.netlify/functions/compute?"
 
 // getQueryString is a function that generates the url query string
 function getQueryString() {
@@ -25,16 +24,18 @@ function getQueryString() {
 
 function getDisplayResult(responseText) {
     let serverResponse = JSON.parse(responseText);
+    let responseBody = JSON.parse(serverResponse.body);
+
     let flag = 0;
     let displayResult = "Invalid input for ";
 
-    if (serverResponse.iStatus.localeCompare("error") == 0) {
+    if (responseBody.iStatus.localeCompare("error") == 0) {
         flag += 1;
     }
-    if (serverResponse.jStatus.localeCompare("error") == 0) {
+    if (responseBody.jStatus.localeCompare("error") == 0) {
         flag += 10;
     }
-    if (serverResponse.nStatus.localeCompare("error") == 0) {
+    if (responseBody.nStatus.localeCompare("error") == 0) {
         flag += 100;
     }
 
@@ -53,7 +54,7 @@ function getDisplayResult(responseText) {
     } else if (flag == 111) {       // 111
         displayResult += "i, j, n";
     } else { // flag = 0
-        displayResult = serverResponse.result;
+        displayResult = responseBody.result;
     }
     return displayResult;
 }
@@ -68,7 +69,7 @@ submitBtn.addEventListener ("click", function() {
     // send a GET request
     var submitRequest = new XMLHttpRequest();
     // var serverResponse;
-    submitRequest.open("GET", siteName+path+queryString, true);
+    submitRequest.open("GET", siteName+queryString, true);
     submitRequest.setRequestHeader("Content-Type", "application/json");
     submitRequest.setRequestHeader("Access-Control-Allow-Origin", "*");
     submitRequest.send();

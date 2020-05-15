@@ -2,51 +2,53 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
-	"net/http"
 	"strconv"
 
-	"github.com/gorilla/mux"
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
 
-func main() {
-	var router = mux.NewRouter()
-	router.HandleFunc("/compute", getResult).Methods("GET")
-
-	fmt.Println("Running server!")
-	log.Fatal(http.ListenAndServe("127.0.0.1:5500", router))
+type responseMessage struct {
+	Result     float64 `json:"result"`
+	TypeStatus string  `json:"typeStatus"`
+	IStatus    string  `json:"iStatus"`
+	JStatus    string  `json:"jStatus"`
+	NStatus    string  `json:"nStatus"`
 }
 
-func getResult(w http.ResponseWriter, r *http.Request) {
-	typeInt, typeErr := strconv.Atoi(r.URL.Query().Get("type"))
-	iFloat, iErr := strconv.ParseFloat(r.URL.Query().Get("i"), 64)
-	nFloat, nErr := strconv.ParseFloat(r.URL.Query().Get("n"), 64)
+func main() {
+	lambda.Start(handler)
+}
 
-	jsonMessage := map[string]string{
-		"result":     "0",
-		"typeStatus": "OK",
-		"iStatus":    "OK",
-		"jStatus":    "OK",
-		"nStatus":    "OK",
+func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
+	typeInt, typeErr := strconv.Atoi(request.QueryStringParameters["type"])
+	iFloat, iErr := strconv.ParseFloat(request.QueryStringParameters["i"], 64)
+	nFloat, nErr := strconv.ParseFloat(request.QueryStringParameters["j"], 64)
+
+	jsonMessage := responseMessage{
+		Result:     0,
+		TypeStatus: "OK",
+		IStatus:    "OK",
+		JStatus:    "OK",
+		NStatus:    "OK",
 	}
 
 	if typeErr != nil {
-		jsonMessage["typeStatus"] = "error"
+		jsonMessage.TypeStatus = "error"
 	}
 	if iErr != nil {
-		jsonMessage["iStatus"] = "error"
+		jsonMessage.IStatus = "error"
 	}
 	if nErr != nil {
-		jsonMessage["nStatus"] = "error"
+		jsonMessage.NStatus = "error"
 	}
 
 	var result float64
 
 	if typeInt == 9 || typeInt == 10 {
-		jFloat, jErr := strconv.ParseFloat(r.URL.Query().Get("j"), 64)
+		jFloat, jErr := strconv.ParseFloat(request.QueryStringParameters["j"], 64)
 		if jErr != nil {
-			jsonMessage["jStatus"] = "error"
+			jsonMessage.JStatus = "error"
 		} else if typeErr == nil && iErr == nil && nErr == nil && jErr == nil {
 			switch typeInt {
 			case 9:
@@ -54,7 +56,7 @@ func getResult(w http.ResponseWriter, r *http.Request) {
 			case 10:
 				result = FGivenAWithJ(iFloat, jFloat, nFloat)
 			}
-			jsonMessage["result"] = strconv.FormatFloat(result, 'f', 4, 64)
+			jsonMessage.Result = result
 		}
 
 	} else if typeErr == nil && iErr == nil && nErr == nil {
@@ -76,9 +78,14 @@ func getResult(w http.ResponseWriter, r *http.Request) {
 		case 8:
 			result = AGivenG(iFloat, nFloat)
 		}
-		jsonMessage["result"] = strconv.FormatFloat(result, 'f', 4, 64)
+		jsonMessage.Result = result
 	}
 
-	// return computed result or error message for each variable
-	json.NewEncoder(w).Encode(jsonMessage)
+	marshalledJSONMsg, _ := json.Marshal(jsonMessage)
+
+	return &events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Body:       string(marshalledJSONMsg),
+	}, nil
+
 }
