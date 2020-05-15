@@ -23,7 +23,7 @@ func main() {
 func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResponse, error) {
 	typeInt, typeErr := strconv.Atoi(request.QueryStringParameters["type"])
 	iFloat, iErr := strconv.ParseFloat(request.QueryStringParameters["i"], 64)
-	nFloat, nErr := strconv.ParseFloat(request.QueryStringParameters["j"], 64)
+	nFloat, nErr := strconv.ParseFloat(request.QueryStringParameters["n"], 64)
 
 	jsonMessage := responseMessage{
 		Result:     0,

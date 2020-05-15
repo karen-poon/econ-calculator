@@ -23,8 +23,7 @@ function getQueryString() {
 }
 
 function getDisplayResult(responseText) {
-    let serverResponse = JSON.parse(responseText);
-    let responseBody = JSON.parse(serverResponse.body);
+    let responseBody = JSON.parse(responseText);
 
     let flag = 0;
     let displayResult = "Invalid input for ";
