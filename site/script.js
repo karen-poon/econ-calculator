@@ -107,7 +107,7 @@ for (var i = 0; i < selectBtns.length; i++) {
             jContainer.textContent = "j: ";
             let jBox = document.createElement('input');
             jBox.setAttribute("id", "jText");
-            jBox.setAttribute("placeholder", " e.g. 0.2");
+            jBox.setAttribute("placeholder", "e.g. 0.2");
             jContainer.appendChild(jBox);
         }
   });
