@@ -71,6 +71,19 @@ var testForFGivenA = []struct {
 	{99999, 99999, math.Inf(1)},
 }
 
+var testForAGivenF = []struct {
+	i        float64
+	n        float64
+	expected float64
+}{
+	{0.1, 5, 0.1638},
+	{0.2, 1.2, 0.8178},
+	{2, 1.2, 0.7307},
+	{2, 3, 0.0769},
+	{0.9999999999999999999, 1.9999999999999999999999999, 0.3333},
+	{99999, 99999, 0},
+}
+
 var testForPGivenG = []struct {
 	i        float64
 	n        float64
@@ -193,6 +206,20 @@ func TestFGivenA(t *testing.T) {
 
 		t.Run(testName, func(t *testing.T) {
 			actual := roundTo4Decimal(FGivenA(testCase.i, testCase.n))
+
+			if actual != testCase.expected {
+				t.Errorf("got %f, want %f", actual, testCase.expected)
+			}
+		})
+	}
+}
+
+func TestAGivenF(t *testing.T) {
+	for i, testCase := range testForAGivenF {
+		testName := "TestAGivenF_" + strconv.Itoa(i+1)
+
+		t.Run(testName, func(t *testing.T) {
+			actual := roundTo4Decimal(AGivenF(testCase.i, testCase.n))
 
 			if actual != testCase.expected {
 				t.Errorf("got %f, want %f", actual, testCase.expected)
