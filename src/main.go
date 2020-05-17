@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"log"
+	"math"
 	"strconv"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -9,11 +11,11 @@ import (
 )
 
 type responseMessage struct {
-	Result     float64 `json:"result"`
-	TypeStatus string  `json:"typeStatus"`
-	IStatus    string  `json:"iStatus"`
-	JStatus    string  `json:"jStatus"`
-	NStatus    string  `json:"nStatus"`
+	Result     string `json:"result"`
+	TypeStatus string `json:"typeStatus"`
+	IStatus    string `json:"iStatus"`
+	JStatus    string `json:"jStatus"`
+	NStatus    string `json:"nStatus"`
 }
 
 func main() {
@@ -26,14 +28,14 @@ func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResp
 	nFloat, nErr := strconv.ParseFloat(request.QueryStringParameters["n"], 64)
 
 	jsonMessage := responseMessage{
-		Result:     0,
+		Result:     "error",
 		TypeStatus: "OK",
 		IStatus:    "OK",
 		JStatus:    "OK",
 		NStatus:    "OK",
 	}
 
-	if typeErr != nil {
+	if typeErr != nil || typeInt <= 0 || typeInt > 10 {
 		jsonMessage.TypeStatus = "error"
 	}
 	if iErr != nil {
@@ -56,7 +58,16 @@ func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResp
 			case 10:
 				result = FGivenAWithJ(iFloat, jFloat, nFloat)
 			}
-			jsonMessage.Result = result
+
+			if math.IsNaN(result) {
+				//do nothing
+			} else if math.IsInf(result, 1) {
+				//do nothing
+			} else if math.IsInf(result, -1) {
+				//do nothing
+			} else {
+				jsonMessage.Result = strconv.FormatFloat(result, 'f', 4, 64)
+			}
 		}
 
 	} else if typeErr == nil && iErr == nil && nErr == nil {
@@ -78,10 +89,23 @@ func handler(request events.APIGatewayProxyRequest) (*events.APIGatewayProxyResp
 		case 8:
 			result = AGivenG(iFloat, nFloat)
 		}
-		jsonMessage.Result = result
+
+		if math.IsNaN(result) {
+			//do nothing
+		} else if math.IsInf(result, 1) {
+			//do nothing
+		} else if math.IsInf(result, -1) {
+			//do nothing
+		} else {
+			jsonMessage.Result = strconv.FormatFloat(result, 'f', 4, 64)
+		}
 	}
 
-	marshalledJSONMsg, _ := json.Marshal(jsonMessage)
+	marshalledJSONMsg, marshallErr := json.Marshal(jsonMessage)
+
+	if marshallErr != nil {
+		log.Println(marshallErr)
+	}
 
 	return &events.APIGatewayProxyResponse{
 		StatusCode: 200,
