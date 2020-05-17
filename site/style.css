@@ -176,7 +176,7 @@ footer {
     text-align: center;
 }
 
-@media (max-height: 710px) {
+@media (max-height: 720px) {
     footer {
         position: static;
     }
